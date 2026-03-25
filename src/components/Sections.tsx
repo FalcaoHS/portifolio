@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import { Terminal, Code2, Brain, Zap, Layout, Layers, Rocket, Globe, FlaskConical, Settings, ChevronRight, ExternalLink, ArrowRight } from "lucide-react";
+import { EXPERIENCES, STORY_BLOCKS, STACK_CATEGORIES } from "../data/career";
 import { HOME_SECTION_SLUGS, PROJECT_BY_SLUG } from "../data/projects";
 
 export const Hero = () => {
@@ -21,7 +22,7 @@ export const Hero = () => {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-mono mb-6 animate-pulse-soft"
         >
           <Terminal size={14} />
-          <span>BUILDER DE SISTEMAS | PENSADOR DE PRODUTO | IA & AGENTES (OPENCLAW)</span>
+          <span>CORPORATIVO · E-COMMERCE · DADOS · LEGADO · IA</span>
         </motion.div>
         
         <div className="flex items-center gap-4 mb-4 text-[10px] font-mono text-text-secondary opacity-50">
@@ -43,7 +44,7 @@ export const Hero = () => {
         </h1>
         
         <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mb-10 max-w-2xl">
-          Transformando caos em sistemas organizados. Há 28 anos na área; na web desde 1996, quando publiquei meu primeiro site. Conecto engenharia, UX e inteligência artificial para resolver problemas reais.
+          Há <strong className="text-text-primary font-semibold">28 anos</strong> unindo negócio, infraestrutura e código — da Souza Cruz e SulAmérica a integrações com WhatsApp e APIs modernas. Na web desde 1996; hoje conecto legado, dados e IA para entregar o que a operação realmente precisa.
         </p>
         
         <div className="flex flex-wrap gap-4">
@@ -94,18 +95,18 @@ export const About = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-4 flex items-center gap-2">
-            <ChevronRight size={14} /> 01. Sobre mim
+            <ChevronRight size={14} /> 01 · Sobre mim
           </h2>
-          <h3 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight">Não sou apenas um desenvolvedor. Sou quem constrói a solução certa.</h3>
+          <h3 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight">Não sou só quem codifica. Sou quem entende o tabuleiro inteiro.</h3>
           <div className="space-y-6 text-text-secondary text-lg leading-relaxed">
             <p>
-              Sou Analista de Sistemas Sênior com 28 anos de experiência na área. Minha abordagem vai além da implementação: busco entender o contexto completo, do negócio ao usuário e à tecnologia.
+              Sou analista de sistemas sênior com trajetória em <strong className="text-text-primary font-medium">multinacionais</strong>, seguradoras, varejo e integradoras — de sistemas que rodaram no mundo inteiro (BAT) a produtos que viraram ativo (SulAmérica → Globo).
             </p>
             <p>
-              Tenho forte capacidade de abstração e visão sistêmica, conectando áreas distintas (IA, backend, frontend, design e dados) em soluções coesas e bem estruturadas.
+              Domino o caminho entre <strong className="text-text-primary font-medium">planilha, banco, ERP legado e API</strong>: já unifiquei SAP e ERPs para capital de giro na Europa, mantive Magento por anos, e hoje ponho WhatsApp e front moderno para conversar com DBF e servidores que ninguém manda aposentar — porque o negócio não pode parar.
             </p>
             <p>
-              Hoje, utilizo IA como parte ativa do fluxo de criação, inclusive com criação de agentes no OpenClaw: sistemas em que agentes autônomos conversam entre si, organizam ideias para execução de tarefas, ajudam a identificar bugs ou problemas, geram propostas de desenvolvimento e apoiam levantamento e clareza de requisitos, desde a concepção até a operação.
+              Uso <strong className="text-text-primary font-medium">IA</strong> (LLMs e agentes como OpenClaw) para acelerar análise, documentação e qualidade — sempre como alavanca sobre o que já aprendi em quase três décadas, não como atalho para pensar.
             </p>
           </div>
         </motion.div>
@@ -142,7 +143,7 @@ export const Philosophy = () => {
   return (
     <section className="py-24 px-6 border-y border-border bg-dot-pattern relative">
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-4">02. Como eu penso</h2>
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-4">02 · Como eu penso</h2>
         <div className="grid gap-8 mt-12">
           {[
             "Não desenvolvo features, resolvo problemas",
@@ -168,46 +169,26 @@ export const Philosophy = () => {
   );
 };
 
-export const Experience = () => {
-  const experiences = [
-    {
-      company: "XL Soluções",
-      role: "Desenvolvedor Web",
-      period: "2024 - Presente",
-      desc: "Desenvolvimento de sistemas legados e novos, criação de APIs, ERP para autopeças e estruturação de SaaS interno.",
-      color: "border-purple-500"
-    },
-    {
-      company: "KUBO Building",
-      role: "Fullstack Developer",
-      period: "2024",
-      desc: "Desenvolvimento com React, Next.js e Node. Arquitetura de sistemas web e integração com PostgreSQL.",
-      color: "border-blue-500"
-    },
-    {
-      company: "S4Sys",
-      role: "Analista de Sistemas",
-      period: "2021 - 2022",
-      desc: "Análise de requisitos, segurança em software, BPMN (Sydle One) e Low Code (Hubtool).",
-      color: "border-emerald-500"
-    },
-    {
-      company: "Infobase",
-      role: "Desenvolvedor PHP",
-      period: "2018 - 2019",
-      desc: "Magento 2, Wordpress, E-commerce e manutenção de sistemas complexos.",
-      color: "border-orange-500"
-    }
-  ];
+function renderInlineEmphasis(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, j) => {
+    const m = part.match(/^\*\*(.+)\*\*$/);
+    if (m) return <strong key={j}>{m[1]}</strong>;
+    return <span key={j}>{part}</span>;
+  });
+}
 
+export const Experience = () => {
   return (
     <section id="experience" className="py-24 px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-12 text-center">03. Trajetória Profissional</h2>
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-4 text-center">03 · Trajetória profissional</h2>
+        <p className="text-center text-text-secondary text-sm max-w-2xl mx-auto mb-12 leading-relaxed">
+          Destaques reais — de sistemas globais a integrações que ninguém vê, mas que mantêm a empresa de pé.
+        </p>
         <div className="space-y-12">
-          {experiences.map((exp, i) => (
-            <motion.div 
-              key={i}
+          {EXPERIENCES.map((exp, i) => (
+            <motion.div
+              key={`${exp.company}-${i}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -223,7 +204,16 @@ export const Experience = () => {
                   {exp.period}
                 </span>
               </div>
-              <p className="text-text-secondary leading-relaxed max-w-3xl">{exp.desc}</p>
+              <p className="text-text-secondary leading-relaxed max-w-3xl [&_strong]:text-text-primary">
+                {renderInlineEmphasis(exp.desc)}
+              </p>
+              {exp.bullets && exp.bullets.length > 0 && (
+                <ul className="mt-4 space-y-2 max-w-3xl text-text-secondary text-sm list-disc pl-5 marker:text-accent">
+                  {exp.bullets.map((b, j) => (
+                    <li key={j}>{renderInlineEmphasis(b)}</li>
+                  ))}
+                </ul>
+              )}
             </motion.div>
           ))}
         </div>
@@ -233,31 +223,12 @@ export const Experience = () => {
 };
 
 export const Stack = () => {
-  const categories = [
-    { name: "Backend", items: ["PHP (Laravel)", "Node.js", "Python", "NestJS"] },
-    { name: "Frontend", items: ["React", "Next.js", "TypeScript", "Flutter"] },
-    { name: "Dados & Infra", items: ["PostgreSQL", "PostGIS", "Redis", "SQL Server", "MySQL", "Docker"] },
-    {
-      name: "IA, Produto & Ops",
-      items: [
-        "LLMs",
-        "OpenClaw (agentes autônomos / multi-agente)",
-        "Orquestração de tarefas & ideias",
-        "Filas (BullMQ)",
-        "Stripe",
-        "AWS S3",
-        "CI/CD",
-        "Testes (e2e)",
-      ],
-    },
-  ];
-
   return (
     <section className="py-24 px-6 bg-surface/30">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-16 text-center">04. Stack & Tecnologias</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {categories.map((cat, i) => (
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-16 text-center">04 · Stack & tecnologias</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {STACK_CATEGORIES.map((cat, i) => (
             <motion.div 
               key={i} 
               initial={{ opacity: 0, y: 20 }}
@@ -289,22 +260,9 @@ export const TechnicalNarrative = () => {
   return (
     <section className="py-24 px-6 relative overflow-hidden">
       <div className="max-w-4xl mx-auto relative z-10">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-12 text-center">05. Narrativa Técnica</h2>
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-12 text-center">05 · Narrativa & linha do tempo</h2>
         <div className="space-y-16">
-          {[
-            {
-              title: "Arquitetura & Abstração",
-              text: "Minha abordagem não é apenas \"codar\", mas sim projetar sistemas. Com quase três décadas desde o primeiro site em 1996, desenvolvi uma capacidade de abstração que permite conectar áreas distintas, da IA ao backend, frontend e dados, em soluções coesas. Entendo o caos e o transformo em sistemas organizados e escaláveis."
-            },
-            {
-              title: "Desenvolvimento com IA",
-              text: "Não vejo a IA como uma ameaça, mas como o maior acelerador de produtividade da nossa era. Integro LLMs e agentes no dia a dia. Tenho experiência com OpenClaw para montar agentes autônomos que dialogam entre si, priorizam e organizam ideias para virar tarefas executáveis, apoiam a caça a bugs e riscos, sugerem frentes de desenvolvimento e reforçam levantamento e documentação em todo o ciclo, da concepção à manutenção. Isso complementa análise de requisitos, código assistido e automação operacional, elevando o nível das entregas."
-            },
-            {
-              title: "Produto & UX",
-              text: "Um sistema tecnicamente perfeito que ninguém consegue usar é um fracasso. Atuo na interseção entre engenharia e produto, garantindo que a tecnologia sirva ao usuário e ao negócio. Minha experiência com ERPs e SaaS me deu a clareza necessária para criar interfaces intuitivas para fluxos complexos."
-            }
-          ].map((item, i) => (
+          {STORY_BLOCKS.map((item, i) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
@@ -316,8 +274,8 @@ export const TechnicalNarrative = () => {
                 <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
                 <div className="w-12 h-1 bg-accent rounded-full" />
               </div>
-              <p className="text-text-secondary text-lg leading-relaxed">
-                {item.text}
+              <p className="text-text-secondary text-lg leading-relaxed [&_strong]:text-text-primary [&_strong]:font-semibold">
+                {renderInlineEmphasis(item.text)}
               </p>
             </motion.div>
           ))}
@@ -339,7 +297,7 @@ export const Projects = () => {
   return (
     <section id="projects" className="py-24 px-6 bg-surface/10">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-16 text-center">06. Produtos & Experimentos</h2>
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-16 text-center">06 · Produtos & experimentos</h2>
         
         <div className="space-y-20">
           {HOME_SECTION_SLUGS.map((section, idx) => (
@@ -402,9 +360,9 @@ export const Projects = () => {
         </div>
 
         <div className="mt-24 p-8 rounded-3xl border border-dashed border-border text-center bg-surface/50">
-          <h4 className="text-lg font-bold mb-4">Experiência Prévia Relevante</h4>
+          <h4 className="text-lg font-bold mb-4">Resumo da linha de frente</h4>
           <p className="text-text-secondary text-sm max-w-2xl mx-auto leading-relaxed">
-            E-commerces em Magento (Okulos, Infobase), Sistemas corporativos (Embratel, Souza Cruz), e Sistema financeiro consolidado via VBA para Nomad Foods (Europa) com integração SAP.
+            Souza Cruz (BAT) 2002–2015: body shop, terceiros, marketing share, AD, GenaSV2, segurança na padronização de acessos. SulAmérica → Globo. ANP (royalties), TJES (PROJUDI), auditoria de código (Nossa Caixa, OAB). Nomad Foods, Magento, BI, OI × LDAP, integrações legado ↔ canais digitais.
           </p>
         </div>
       </div>
