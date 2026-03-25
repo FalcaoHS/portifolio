@@ -25,7 +25,7 @@ Copie `.env.example` para `.env` e preencha (por exemplo `GEMINI_API_KEY` se usa
 ## Deploy na Vercel
 
 **Opção A — Git (recomendado)**  
-No [Vercel Dashboard](https://vercel.com/new), importe o repositório GitHub. O `vercel.json` já define build (`npm run build`), saída (`dist`) e rotas SPA para o React Router.
+No [Vercel Dashboard](https://vercel.com/new), importe o repositório GitHub. A Vercel detecta Vite automaticamente (`npm run build` → `dist`). O `vercel.json` só adiciona rewrites para o React Router (rotas como `/projeto/:slug`).
 
 **Opção B — CLI**
 
