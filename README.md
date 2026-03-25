@@ -1,6 +1,6 @@
 # Portfólio
 
-Site do portfólio (Vite + React + TypeScript).
+Meu currículo online — site em Vite + React + TypeScript.
 
 Repositório: [github.com/FalcaoHS/portifolio](https://github.com/FalcaoHS/portifolio)
 
