@@ -1,23 +1,18 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ExternalLink } from "lucide-react";
-import { getProject, type Project, type ProjectStatus } from "../data/projects";
+import { getLocalizedProject, type Project } from "../data/projects";
 
-const STATUS_LABEL: Record<ProjectStatus, string> = {
-  production: "Produção",
-  "open-source": "Open source",
-  technical: "Experimento técnico",
-  development: "Em desenvolvimento",
-  showcase: "Vitrine & legado",
-};
+function ProjectBody({ project, statusLabel }: { project: Project; statusLabel: string }) {
+  const { t } = useTranslation();
 
-function ProjectBody({ project }: { project: Project }) {
   return (
     <>
       <header className="mb-12">
         <p className="text-sm font-mono text-accent uppercase tracking-widest mb-4">
-          {project.sectionTitle} · {STATUS_LABEL[project.status]}
+          {project.sectionTitle} · {statusLabel}
         </p>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">{project.name}</h1>
         <p className="text-xl text-text-secondary leading-relaxed">{project.desc}</p>
@@ -42,7 +37,7 @@ function ProjectBody({ project }: { project: Project }) {
 
       {project.highlights && project.highlights.length > 0 && (
         <div className="mb-12 p-8 rounded-3xl bg-surface/50 border border-border">
-          <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-6">Destaques</h2>
+          <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-6">{t("projectDetail.highlights")}</h2>
           <ul className="space-y-4">
             {project.highlights.map((h, i) => (
               <li key={i} className="flex gap-3 text-text-secondary">
@@ -55,7 +50,7 @@ function ProjectBody({ project }: { project: Project }) {
       )}
 
       <div className="rounded-3xl border border-dashed border-border p-8 bg-surface/30">
-        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-6">Links</h2>
+        <h2 className="text-sm font-mono text-accent uppercase tracking-widest mb-6">{t("projectDetail.links")}</h2>
         {project.links.length > 0 ? (
           <ul className="space-y-3">
             {project.links.map((link) => (
@@ -73,9 +68,7 @@ function ProjectBody({ project }: { project: Project }) {
             ))}
           </ul>
         ) : (
-          <p className="text-text-secondary text-sm leading-relaxed">
-            Não há link público cadastrado para este projeto. A página reúne contexto técnico e escopo. Quando houver demo ou repositório público, os links aparecerão aqui.
-          </p>
+          <p className="text-text-secondary text-sm leading-relaxed">{t("projectDetail.noLinks")}</p>
         )}
       </div>
     </>
@@ -84,17 +77,21 @@ function ProjectBody({ project }: { project: Project }) {
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const project = slug ? getProject(slug) : undefined;
+  const { t, i18n } = useTranslation();
+  const project = slug ? getLocalizedProject(slug, t) : undefined;
+
+  const statusLabel =
+    project ? (t(`projectDetail.status.${project.status}` as const) as string) : "";
 
   useEffect(() => {
     if (!project) return;
     const prev = document.title;
-    document.title = `${project.name} | Hudson Falcão Silva`;
+    document.title = t("meta.projectTitle", { name: project.name });
     window.scrollTo(0, 0);
     return () => {
       document.title = prev;
     };
-  }, [project]);
+  }, [project, t, i18n.language]);
 
   if (!slug || !project) {
     return <Navigate to="/" replace />;
@@ -108,10 +105,10 @@ export default function ProjectDetail() {
           className="inline-flex items-center gap-2 text-sm font-mono text-text-secondary hover:text-accent transition-colors mb-12 group"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Voltar aos projetos
+          {t("projectDetail.back")}
         </Link>
 
-        <ProjectBody project={project} />
+        <ProjectBody project={project} statusLabel={statusLabel} />
       </motion.div>
     </article>
   );
